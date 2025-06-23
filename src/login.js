@@ -90,7 +90,7 @@ const LoginScreen = () => {
   const Content = (
     <View style={styles.container}>
       <View style={styles.sign_sec}>
-        <View style={styles.sign_con}>
+        <View style={styles.sign_cond}>
           <View style={styles.sign_hd}>
             <Animated.Text style={{ transform: [{ translateY }] }}>
               <Text style={styles.sign_hdtxt}>Welcome Back!</Text>
