@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "657024742304",
+    "project_id": "hellofirebase-6a550",
+    "storage_bucket": "hellofirebase-6a550.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:657024742304:android:7741ee7c3c97a4e12d6ac5",
+        "android_client_info": {
+          "package_name": "com.fireenter"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB-abcqofKKMTsuMUUAsTEW9YZXUGC-XJU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
