@@ -43,7 +43,7 @@ const LoginScreen = () => {
             text: 'OK',
             onPress: () => {
               console.log('OK Pressed');
-              navigation.navigate('dashboard');
+              navigation.replace('dashboard');
             }
           }
         ],
@@ -89,7 +89,7 @@ const LoginScreen = () => {
 
   const Content = (
     <View style={styles.container}>
-      <View style={styles.sign_sec}>
+      <View style={[styles.sign_sec,{ marginBottom: orientation ? 50 : 0 } ]}>
         <View style={styles.sign_cond}>
           <View style={styles.sign_hd}>
             <Animated.Text style={{ transform: [{ translateY }] }}>
@@ -149,7 +149,7 @@ const LoginScreen = () => {
         </Text>
       </View>
       <TouchableOpacity onPress={createUser}>
-        <View style={[styles.gbl_btn, { marginTop: orientation ? 50 : 0 }]}>
+        <View style={[styles.gbl_btn,]}>
           <Text style={styles.gbl_btntxt}>Login</Text>
         </View>
       </TouchableOpacity>
