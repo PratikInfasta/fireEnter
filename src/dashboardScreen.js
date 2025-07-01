@@ -1,19 +1,12 @@
 import React, { useState, } from 'react';
-import {
-  View,
-  Text,
-  StyleSheet,
-  TouchableOpacity,
-  TextInput,
-  Alert,
-  Image
-} from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, TextInput, Alert, Image } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { addDoc, collection, } from 'firebase/firestore';
 import { firestore } from './firebase/firebase';
-import { launchImageLibrary ,launchCamera} from 'react-native-image-picker';
+import { launchImageLibrary, launchCamera } from 'react-native-image-picker';
 import { storage } from './firebase/firebase';
 import { PermissionsAndroid, Platform } from 'react-native';
+
 // Make sure the path is correct
 
 const DashboardScreen = () => {
@@ -25,7 +18,7 @@ const DashboardScreen = () => {
   const [uploading, setUploading] = useState(false);
 
 
- const requestPermissions = async () => {
+  const requestPermissions = async () => {
     if (Platform.OS === 'android') {
       try {
         const apiLevel = Platform.constants?.Release
@@ -68,8 +61,6 @@ const DashboardScreen = () => {
     }
   };
 
-
-
   const handleImagePick = async () => {
     const permission = await requestPermissions();
     if (!permission) return;
@@ -87,10 +78,7 @@ const DashboardScreen = () => {
     });
   };
 
-
-
-  
- const handleCameraLaunch = async () => {
+  const handleCameraLaunch = async () => {
     const permission = await requestPermissions();
     if (!permission) return;
 
@@ -117,22 +105,18 @@ const DashboardScreen = () => {
     }
   };
 
-
-const handleSelectImage = () => {
-  Alert.alert(
-    'Select Image',
-    'Choose an option',
-    [
-      { text: 'Take Photo', onPress: handleCameraLaunch },
-      { text: 'Choose from Gallery', onPress: handleImagePick },
-      { text: 'Cancel', style: 'cancel' }
-    ],
-    { cancelable: true }
-  );
-};
- 
-
-
+  const handleSelectImage = () => {
+    Alert.alert(
+      'Select Image',
+      'Choose an option',
+      [
+        { text: 'Take Photo', onPress: handleCameraLaunch },
+        { text: 'Choose from Gallery', onPress: handleImagePick },
+        { text: 'Cancel', style: 'cancel' }
+      ],
+      { cancelable: true }
+    );
+  };
 
   const handleAddProduct = async () => {
 

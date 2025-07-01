@@ -14,6 +14,12 @@ import {
 import { useNavigation } from '@react-navigation/native';
 import { firestore } from './firebase/firebase';
 import { addDoc, collection } from 'firebase/firestore';
+import auth from '@react-native-firebase/auth'
+
+
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
+
 
 const LoginScreen = () => {
   const navigation = useNavigation();
@@ -23,37 +29,46 @@ const LoginScreen = () => {
   const translateY = useRef(new Animated.Value(0)).current;
   const [orientation, setOrientation] = useState('PORTRAIT');
 
-  const createUser = async () => {
-    try {
-      await addDoc(collection(firestore, 'Users'), {
-        email: userEmail,
-        password: password
+ useEffect(() => {
+    getData();
+  }, []);
+
+  // validation 
+  const handleLogin = () => {
+    auth()
+      .signInWithEmailAndPassword(userEmail, password)
+      .then(userCredential => {
+        const user = userCredential.user;
+        user.sendEmailVerification()
+          .then(() => {
+            setData(userEmail); // Save email after successful login
+            Alert.alert(
+              'Verification Email Sent!',
+              'Please check your email to verify your account.',
+              [
+                {
+                  text: 'OK',
+                  onPress: () => navigation.replace('dashboard',), // pass email if needed
+                  
+                },
+              ],
+              { cancelable: false }
+            );
+          })
+          .catch(error => {
+            Alert.alert('Error sending email verification.', error.message);
+          });
+      })
+      .catch(error => {
+        if (error.code === 'auth/email-already-in-use') {
+          Alert.alert('That email address is already in use!');
+        } else if (error.code === 'auth/invalid-email') {
+          Alert.alert('That email address is invalid!');
+        } else {
+          Alert.alert(error.message);
+        }
       });
-
-      Alert.alert(
-        'Success',
-        'User created successfully',
-        [
-          {
-            text: 'Cancel',
-            onPress: () => console.log('User canceled'),
-            style: 'cancel'
-          },
-          {
-            text: 'OK',
-            onPress: () => {
-              console.log('OK Pressed');
-              navigation.replace('dashboard');
-            }
-          }
-        ],
-        { cancelable: false }
-      );
-    } catch (error) {
-      console.error('Error creating user:', error);
-    }
   };
-
   // Animation
   useEffect(() => {
     Animated.loop(
@@ -87,9 +102,41 @@ const LoginScreen = () => {
     };
   }, []);
 
+
+  // local storage 
+
+    // set item data 
+    const setData = async () => {
+    try {
+      await AsyncStorage.setItem('email', userEmail);
+      console.log('Email saved in AsyncStorage:', userEmail);
+    } catch (error) {
+      console.warn('Error saving email:', error);
+    }
+  };
+
+    // get data 
+    const getData = async () => {
+    try {
+      const userEmail = await AsyncStorage.getItem('email');
+      if (email !== null) {
+        setuserEmail(userEmail);
+        console.log('Retrieved email from AsyncStorage:', userEmail);
+      }
+    } catch (error) {
+      console.warn('Error retrieving email:', error);
+    }
+  };
+
+
+
+
+
+
+
   const Content = (
     <View style={styles.container}>
-      <View style={[styles.sign_sec,{ marginBottom: orientation ? 50 : 0 } ]}>
+      <View style={[styles.sign_sec, { marginBottom: orientation ? 50 : 0 }]}>
         <View style={styles.sign_cond}>
           <View style={styles.sign_hd}>
             <Animated.Text style={{ transform: [{ translateY }] }}>
@@ -143,12 +190,12 @@ const LoginScreen = () => {
         </View>
         <Text style={styles.link}>
           Create An Account{' '}
-          <Text onPress={() => navigation.navigate('dashboard')}>
+          <Text >
             <Text style={{ textDecorationLine: 'underline', color: 'red' }}>Signups</Text>
           </Text>
         </Text>
       </View>
-      <TouchableOpacity onPress={createUser}>
+      <TouchableOpacity onPress={handleLogin}>
         <View style={[styles.gbl_btn,]}>
           <Text style={styles.gbl_btntxt}>Login</Text>
         </View>

@@ -46,7 +46,7 @@ const ProductScreen = () => {
                 style={{ width: 200, height: 200, borderRadius: 10 }}
                 resizeMode="cover"
             />
-            <Text>File path:{item.image}</Text>
+            <Text>File path : {item.image}</Text>
         </View>
     );
 
