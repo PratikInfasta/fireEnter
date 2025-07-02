@@ -6,6 +6,8 @@ import DashboardScreen from "./src/dashboardScreen";
 import ProductScreen from "./src/productScreen";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { ActivityIndicator, View } from "react-native";
+import MapScreen from "./src/address";
+import AddressListScreen from "./src/allAddress";
 // import OTPScreen from "./src/otp";
 
 const Stack = createNativeStackNavigator();
@@ -44,7 +46,8 @@ if (!initial) {
         <Stack.Screen name="LoginScreen" component={LoginScreen} options={{ headerTitle: "Login Page", headerTitleAlign: "center", }} />
         <Stack.Screen name="dashboard" component={DashboardScreen} options={{ headerTitle: "dashboard", headerTitleAlign: "center", }} />
         <Stack.Screen name="product" component={ProductScreen} options={{ headerTitle: "Product", headerTitleAlign: "center", }} />
-        {/* <Stack.Screen name="otp" component={OTPScreen}  options={{headerTitle:"Product",headerTitleAlign: "center",}}/> */}
+        <Stack.Screen name="Address" component={MapScreen}  options={{headerTitle:"Address",headerTitleAlign: "center",}}/>
+        <Stack.Screen name="AddressList" component={AddressListScreen}  options={{headerTitle:"Address",headerTitleAlign: "center",}}/>
       </Stack.Navigator>
     </NavigationContainer>
   )

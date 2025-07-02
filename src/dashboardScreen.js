@@ -151,7 +151,7 @@ const DashboardScreen = () => {
               setAmount('');
               setImageUri(null);
               console.log('Product added');
-              navigation.navigate('product')
+              navigation.navigate('Address')
             }
           }
         ],
